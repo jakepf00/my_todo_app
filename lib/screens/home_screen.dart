@@ -23,6 +23,12 @@ class HomeScreen extends StatelessWidget {
               onChanged: (value) {
                 tasksProvider.toggleTaskCompletion(index);
               },
+              onDeleted: () {
+                tasksProvider.deleteTask(index);
+              },
+              onEdited: () {
+                tasksProvider.editTask(index);
+              }
             );
           },
         ),

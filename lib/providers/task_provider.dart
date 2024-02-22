@@ -13,11 +13,18 @@ class TaskProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteTask(int index) {
+    _tasks.removeAt(index);
+    notifyListeners();
+  }
+
+  void editTask(int index) {
+    // TODO: edit task
+    print("Editing task $index");
+  }
+
   void toggleTaskCompletion(int index) {
     _tasks[index].isDone = !_tasks[index].isDone;
     notifyListeners();
   }
-
-  // TODO: implement methods to update and delete tasks
-  // Also for fetching and managing tasks
 }

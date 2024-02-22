@@ -4,11 +4,16 @@ class TaskTile extends StatelessWidget {
   final String title;
   final bool isDone;
   final Function(bool?) onChanged;
+  final void Function() onDeleted;
+  final void Function() onEdited;
 
   const TaskTile({
     required this.title,
     required this.isDone,
     required this.onChanged,
+    required this.onDeleted,
+    required this.onEdited,
+
   });
 
   @override
@@ -19,6 +24,10 @@ class TaskTile extends StatelessWidget {
         value: isDone,
         onChanged: onChanged,
       ),
+      trailing: CloseButton(
+        onPressed: onDeleted,
+      ),
+      onLongPress: onEdited,
     );
   }
 }
