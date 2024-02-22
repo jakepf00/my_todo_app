@@ -13,6 +13,11 @@ class TaskProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void toggleTaskCompletion(int index) {
+    _tasks[index].isDone = !_tasks[index].isDone;
+    notifyListeners();
+  }
+
   // TODO: implement methods to update and delete tasks
   // Also for fetching and managing tasks
 }

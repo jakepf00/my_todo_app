@@ -6,24 +6,26 @@ import '../widgets/task_tile.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final tasks = Provider.of<TaskProvider>(context).tasks;
+    final tasksProvider = Provider.of<TaskProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Todo List'),
       ),
-      body: ListView.builder(
-        itemCount: tasks.length,
-        itemBuilder: (ctx, index) {
-          final task = tasks[index];
-          return TaskTile(
-            title: task.title,
-            isDone: task.isDone,
-            onChanged: (value) {
-              // TODO: Implement task completion logic
-            },
-          );
-        },
+      body: Consumer<TaskProvider>(
+        builder: (context, taskProvider, _) => ListView.builder(
+          itemCount: taskProvider.tasks.length,
+          itemBuilder: (ctx, index) {
+            final task = taskProvider.tasks[index];
+            return TaskTile(
+              title: task.title,
+              isDone: task.isDone,
+              onChanged: (value) {
+                tasksProvider.toggleTaskCompletion(index);
+              },
+            );
+          },
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
