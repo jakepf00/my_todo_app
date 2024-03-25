@@ -7,6 +7,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final tasksProvider = Provider.of<TaskProvider>(context);
+    final taskController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -18,18 +19,46 @@ class HomeScreen extends StatelessWidget {
           itemBuilder: (ctx, index) {
             final task = taskProvider.tasks[index];
             return TaskTile(
-              title: task.title,
-              isDone: task.isDone,
-              onChanged: (value) {
-                tasksProvider.toggleTaskCompletion(index);
-              },
-              onDeleted: () {
-                tasksProvider.deleteTask(index);
-              },
-              onEdited: () {
-                tasksProvider.editTask(index);
-              }
-            );
+                title: task.title,
+                isDone: task.isDone,
+                onChanged: (value) {
+                  tasksProvider.toggleTaskCompletion(index);
+                },
+                onDeleted: () {
+                  tasksProvider.deleteTask(index);
+                },
+                onEdited: () async {
+                  await showDialog<void>(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                            content: Column(
+                              //clipBehavior: Clip.none,
+                              children: <Widget>[
+                                CloseButton(onPressed: () {
+                                  Navigator.of(context).pop();
+                                }),
+                                const Text(
+                                  "Edit Task",
+                                ),
+                                TextField(
+                                  controller: taskController,
+                                  decoration: const InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Enter new task',
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  style: ElevatedButton.styleFrom(textStyle: const TextStyle(fontSize: 20)),
+                                  onPressed: () {
+                                    tasksProvider.editTask(index, taskController.text);
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: const Text('Update Task'),
+                                ),
+                              ],
+                            ),
+                          ));
+                });
           },
         ),
       ),

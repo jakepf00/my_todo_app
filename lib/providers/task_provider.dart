@@ -18,9 +18,9 @@ class TaskProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void editTask(int index) {
-    // TODO: edit task
-    print("Editing task $index");
+  void editTask(int index, String newData) {
+    _tasks[index].title = newData;
+    notifyListeners();
   }
 
   void toggleTaskCompletion(int index) {

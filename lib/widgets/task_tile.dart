@@ -27,7 +27,7 @@ class TaskTile extends StatelessWidget {
       trailing: CloseButton(
         onPressed: onDeleted,
       ),
-      onLongPress: onEdited,
+      onTap: onEdited,
     );
   }
 }
